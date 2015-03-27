@@ -1,0 +1,92 @@
+<?php
+namespace frontend\components;
+
+use Yii;
+use yii\filters\AccessControl;
+use yii\web\Controller;
+use yii\filters\VerbFilter;
+use backend\assets\AppAsset;
+use yii\web\View;
+/**
+ * Site controller
+ */
+
+class BaseController extends Controller{
+
+	public $js = [];
+	public $modal_window = [];
+
+	public function init(){
+
+		$this->enableCsrfValidation = false;
+
+		return parent::init();
+	}
+
+	public function beforeAction($action){
+		return parent::beforeAction($action);
+	}
+	
+	public function assetJs($file){
+		$this->js[] = $file;
+	}
+
+	public function viewAssetsJs(){
+		
+		$result = '';
+
+		foreach($this->js AS $js){
+			$result.= '<script src="'.$js.'"></script>
+';
+		}
+
+		return $result;
+
+	}
+
+	public function strip_tags_array($arr = Array()){
+
+		$result = '';
+
+		foreach($arr AS $key => $elem){
+			if(is_array($elem)){
+				$result[$key] = self::strip_tags_array($elem);
+				continue;
+			}
+
+			$result[$key] = (!empty($elem) ? strip_tags($elem) : '');
+		}
+
+		return $result;
+	}
+
+	public function get_modal_windows(){
+
+		$result = '';
+
+		foreach($this->modal_window AS $modal){
+			$result.= $this->renderPartial('/modal_window/'.$modal, [], true).'
+';
+		}
+
+		return $result;
+
+	}
+
+	public function make_options_from_array($array = Array(), $selected = '0'){
+
+		if(!count($array)){
+			return false;
+		}
+
+		$result = '';
+
+		foreach($array AS $key => $elem){
+			$result.= '<option '.($selected == $key ? ' selected ' : '').' value="'.$key.'">'.$elem.'</option>';
+		}
+
+		return $result;
+
+	}
+
+}

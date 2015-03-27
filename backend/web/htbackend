@@ -1,0 +1,10 @@
+AuthType Basic   
+AuthName "Private zone. Only for administrator!" 
+#AuthUserFile  /var/www/mailer/backend/web/.htpasswd   
+#require valid-user
+
+RewriteEngine On RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php

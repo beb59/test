@@ -1,0 +1,11 @@
+stdClass Object
+(
+    [status] => N
+    [task] => 1
+    [profiles] => Array
+        (
+            [0] => http://ok.ru/sp.pavlova73
+            [1] => http://ok.ru/profile/468149853651
+        )
+
+)
